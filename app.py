@@ -20,13 +20,13 @@ def main():
 def gravar():
     nome = request.form['nome']
     cpf = request.form['cpf']
-    endereco = request.form['endereco ']
+    endereco = request.form['endereco']
     if nome and cpf and endereco:
       conn = mysql.connect()
       cursor = conn.cursor()
       cursor.execute('insert into tabela_rena (nome, cpf, endereco) VALUES (%s, %s, %s)', (nome, cpf, endereco))
       conn.commit()
-      return 'Aluno cadastrado com sucesso'
+      return 'Aluno cadastrado com sucesso :)'
     return render_template('index.html')
   
 
@@ -41,5 +41,5 @@ def listar():
   return render_template('lista.html', datas=data)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host='0.0.0.0', port=port)
