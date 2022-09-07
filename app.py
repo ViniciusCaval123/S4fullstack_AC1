@@ -8,7 +8,7 @@ app = Flask(__name__)
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'mudar123'
-app.config['MYSQL_DATABASE_DB'] = 'usuario'
+app.config['MYSQL_DATABASE_DB'] = 'ac'
 app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
 mysql.init_app(app)
 
@@ -18,15 +18,17 @@ def main():
 
 @app.route('/gravar', methods=['POST','GET'])
 def gravar():
-  nome = request.form['nome']
-  email = request.form['email']
-  senha = request.form['senha']
-  if nome and email and senha:
-    conn = mysql.connect()
-    cursor = conn.cursor()
-    cursor.execute('insert into user (nome, email, senha) VALUES (%s, %s, %s)', (nome, email, senha))
-    conn.commit()
-  return render_template('index.html')
+    nome = request.form['nome']
+    email = request.form['email']
+    senha = request.form['senha']
+    if nome and email and senha:
+      conn = mysql.connect()
+      cursor = conn.cursor()
+      cursor.execute('insert into usuario (nome, email, senha) VALUES (%s, %s, %s)', (nome, email, senha))
+      conn.commit()
+      return 'success'
+    return render_template('index.html')
+  
 
 
 @app.route('/listar', methods=['POST','GET'])
