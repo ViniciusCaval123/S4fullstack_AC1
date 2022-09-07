@@ -18,17 +18,16 @@ def main():
 
 @app.route('/gravar', methods=['POST','GET'])
 def gravar():
-    nome = request.form['nome']
-    cpf = request.form['cpf']
-    endereco = request.form['endereco']
-    if nome and cpf and endereco:
-      conn = mysql.connect()
-      cursor = conn.cursor()
-      cursor.execute('insert into tabela_rena (nome, cpf, endereco) VALUES (%s, %s, %s)', (nome, cpf, endereco))
-      conn.commit()
-      return 'Aluno cadastrado com sucesso :)'
-    return render_template('index.html')
-  
+  nome = request.form['nome']
+  cpf = request.form['cpf']
+  endereco = request.form['endereco']
+  if nome and cpf and endereco:
+    conn = mysql.connect()
+    cursor = conn.cursor()
+    cursor.execute('insert into tabela_rena (nome, cpf, endereco) VALUES (%s, %s, %s)', (nome, cpf, endereco))
+    conn.commit()
+    return 'Aluno cadastrado com sucesso :)'
+  return render_template('index.html')
 
 
 @app.route('/listar', methods=['POST','GET'])
