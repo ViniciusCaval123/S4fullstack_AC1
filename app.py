@@ -8,7 +8,7 @@ app = Flask(__name__)
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
 app.config['MYSQL_DATABASE_PASSWORD'] = 'mudar123'
-app.config['MYSQL_DATABASE_DB'] = 'teste'
+app.config['MYSQL_DATABASE_DB'] = 'usuario'
 app.config['MYSQL_DATABASE_HOST'] = '172.17.0.2'
 mysql.init_app(app)
 
@@ -24,7 +24,7 @@ def gravar():
   if nome and email and senha:
     conn = mysql.connect()
     cursor = conn.cursor()
-    cursor.execute('insert into user (name, email, senha) VALUES (%s, %s, %s)', (nome, email, senha))
+    cursor.execute('insert into user (nome, email, senha) VALUES (%s, %s, %s)', (nome, email, senha))
     conn.commit()
   return render_template('index.html')
 
@@ -33,7 +33,7 @@ def gravar():
 def listar():
   conn = mysql.connect()
   cursor = conn.cursor()
-  cursor.execute('select name, email, senha from user')
+  cursor.execute('select nome, email, senha from usuario')
   data = cursor.fetchall()
   conn.commit()
   return render_template('lista.html', datas=data)
@@ -41,4 +41,5 @@ def listar():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-
+ 
+ # CREATE TABLE usuario ( user_id BIGINT NOT NULL AUTO_INCREMENT, nome VARCHAR(45) NULL, email VARCHAR(45) NULL, senha VARCHAR(45) NULL, PRIMARY KEY (user_id)); DELIMITER // CREATE PROCEDURE sp_createUser( IN p_nome VARCHAR(20), IN p_email VARCHAR(20), IN p_senha VARCHAR(20)) BEGIN IF ( select exists (select 1 from usuario where email = p_email) ) THEN select 'Email já existe!!'; ELSE insert into usuario ( nome, email, senha ) values ( p_nome, p_email, p_senha );END IF; END // DELIMITER ;
